@@ -330,13 +330,24 @@
         /* Hero Section within Module */
         .module-hero {
             height: 180px;
-            background: linear-gradient(135deg, #000000 0%, #1a1a1a 100%);
+            background: linear-gradient(135deg, #1a1a1a 0%, #2a2a2a 100%);
             position: relative;
             display: flex;
             align-items: center;
-            justify-content: center;
+            justify-content: space-around;
             color: white;
-            font-size: 48px;
+            font-size: 42px;
+            overflow: hidden;
+        }
+
+        .module-hero::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(45deg, rgba(255,102,51,0.1) 0%, rgba(93,173,226,0.1) 100%);
         }
 
         .module-content {
@@ -414,7 +425,7 @@
             color: var(--airtime-orange);
         }
 
-        /* Current Deals Section */
+        /* Personalized Deals Section */
         .deals-section {
             background: var(--surface);
             border-radius: var(--radius-md);
@@ -428,6 +439,12 @@
             letter-spacing: 0.5px;
             text-transform: uppercase;
             color: var(--text-primary);
+            margin-bottom: 4px;
+        }
+
+        .deals-subtitle {
+            font-size: 11px;
+            color: var(--text-tertiary);
             margin-bottom: 12px;
         }
 
@@ -559,6 +576,58 @@
 
         .nearby-stores .highlight {
             font-weight: 800;
+        }
+
+        /* Brand Carousel */
+        .brands-carousel {
+            margin-bottom: 16px;
+        }
+
+        .brands-carousel-title {
+            font-size: 10px;
+            font-weight: 700;
+            color: var(--text-tertiary);
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            margin-bottom: 12px;
+            text-align: center;
+        }
+
+        .brands-scroll {
+            display: flex;
+            gap: 12px;
+            overflow-x: auto;
+            -webkit-overflow-scrolling: touch;
+            scrollbar-width: none;
+            padding: 0 4px 8px;
+        }
+
+        .brands-scroll::-webkit-scrollbar {
+            display: none;
+        }
+
+        .brand-logo-item {
+            min-width: 60px;
+            height: 60px;
+            background: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 2px 6px rgba(0, 0, 0, 0.08);
+            font-size: 11px;
+            font-weight: 700;
+            color: var(--text-primary);
+            border: 1px solid var(--border);
+            flex-shrink: 0;
+        }
+
+        .brand-logo-item.nike {
+            font-size: 20px;
+        }
+
+        .brand-logo-item.adidas {
+            font-size: 18px;
         }
 
         .button-primary {
@@ -1119,6 +1188,9 @@
                     <div class="module-hero">
                         <div class="switch-save-badge">SWITCH & SAVE</div>
                         <span>👟</span>
+                        <span>⚽</span>
+                        <span>🏃</span>
+                        <span>🏀</span>
                     </div>
 
                     <div class="module-content">
@@ -1134,9 +1206,9 @@
                             <div class="reward-badge-large">3%</div>
                         </div>
 
-                        <!-- Spend Reference -->
+                        <!-- Personalized Title -->
                         <div class="spend-reference">
-                            You spent <span class="spend-amount">£127</span> at Foot Locker last month — earn rewards at JD Sports instead
+                            Switch to earn even more on your next sportswear purchase
                         </div>
 
                         <!-- Trust & Payment - MOVED UP -->
@@ -1169,19 +1241,34 @@
                             </div>
                         </div>
 
-                        <!-- Current Deals -->
+                        <!-- Brand Carousel -->
+                        <div class="brands-carousel">
+                            <div class="brands-carousel-title">Brands you'll love at JD Sports</div>
+                            <div class="brands-scroll">
+                                <div class="brand-logo-item nike">✓</div>
+                                <div class="brand-logo-item adidas">⚡</div>
+                                <div class="brand-logo-item">PUMA</div>
+                                <div class="brand-logo-item">NB</div>
+                                <div class="brand-logo-item">UA</div>
+                                <div class="brand-logo-item">TNF</div>
+                                <div class="brand-logo-item">RBK</div>
+                            </div>
+                        </div>
+
+                        <!-- Personalized Deals -->
                         <div class="deals-section">
-                            <div class="deals-title">⚡ CURRENT DEALS</div>
+                            <div class="deals-title">🎯 HANDPICKED FOR YOU</div>
+                            <div class="deals-subtitle">Based on your Foot Locker purchases</div>
                             <div class="deal-item">
                                 <div class="deal-icon">👟</div>
                                 <div class="deal-text">
-                                    <span class="deal-highlight">Up to 50% off</span> Nike trainers
+                                    <span class="deal-highlight">Up to 50% off</span> Nike trainers — the styles you love
                                 </div>
                             </div>
                             <div class="deal-item">
                                 <div class="deal-icon">🧥</div>
                                 <div class="deal-text">
-                                    <span class="deal-highlight">50% off</span> jackets & coats
+                                    <span class="deal-highlight">50% off</span> jackets & coats in your size
                                 </div>
                             </div>
                             <div class="deal-item">
