@@ -425,54 +425,53 @@
             color: var(--airtime-orange);
         }
 
-        /* Personalized Deals Section */
+        /* Personalized Deals Section - Refined */
         .deals-section {
-            background: var(--surface);
-            border-radius: var(--radius-md);
-            padding: 16px;
-            margin-bottom: 16px;
+            margin-bottom: 20px;
         }
 
         .deals-title {
-            font-size: 12px;
-            font-weight: 800;
-            letter-spacing: 0.5px;
+            font-size: 13px;
+            font-weight: 700;
+            letter-spacing: 0.3px;
             text-transform: uppercase;
             color: var(--text-primary);
-            margin-bottom: 4px;
+            margin-bottom: 6px;
         }
 
         .deals-subtitle {
-            font-size: 11px;
-            color: var(--text-tertiary);
-            margin-bottom: 12px;
+            font-size: 12px;
+            color: var(--text-secondary);
+            margin-bottom: 16px;
         }
 
         .deal-item {
             display: flex;
-            align-items: center;
+            align-items: flex-start;
             gap: 12px;
-            padding: 10px 0;
+            padding: 12px 0;
             border-bottom: 1px solid var(--border);
         }
 
         .deal-item:last-child {
             border-bottom: none;
+            padding-bottom: 0;
         }
 
         .deal-icon {
-            font-size: 24px;
+            font-size: 20px;
             flex-shrink: 0;
+            margin-top: 2px;
         }
 
         .deal-text {
             font-size: 14px;
             color: var(--text-secondary);
-            line-height: 1.4;
+            line-height: 1.5;
         }
 
         .deal-highlight {
-            color: var(--airtime-orange);
+            color: var(--text-primary);
             font-weight: 600;
         }
 
@@ -540,65 +539,49 @@
             color: var(--text-secondary);
         }
 
-        /* Member Stat */
-        .member-stat {
-            background: var(--airtime-blue-light);
-            border-radius: var(--radius-md);
-            padding: 12px 16px;
-            margin-bottom: 16px;
-            text-align: center;
-            font-size: 13px;
-            color: var(--text-primary);
-            font-weight: 600;
+        /* Info Pills - Subtle */
+        .info-pills {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 12px;
+            margin-bottom: 24px;
         }
 
-        /* Click and Collect Banner */
-        .click-collect-banner {
-            background: var(--airtime-yellow);
-            border-radius: var(--radius-md);
-            padding: 12px 16px;
-            margin-bottom: 16px;
+        .info-pill {
             display: flex;
             align-items: center;
-            gap: 10px;
+            gap: 8px;
+            font-size: 12px;
+            color: var(--text-secondary);
+            font-weight: 500;
+        }
+
+        .info-pill .icon {
+            font-size: 16px;
+        }
+
+        .info-pill .highlight {
+            font-weight: 700;
             color: var(--text-primary);
         }
 
-        .click-collect-banner .icon {
-            font-size: 20px;
-        }
-
-        .click-collect-banner .text {
-            font-size: 13px;
-            font-weight: 700;
-            line-height: 1.3;
-        }
-
-        .click-collect-banner .subtext {
-            font-size: 11px;
-            font-weight: 600;
-            opacity: 0.8;
-        }
-
-        /* Trustpilot Review Card */
+        /* Trustpilot Review Card - Refined */
         .trustpilot-review {
-            background: white;
+            background: var(--surface);
             border-radius: var(--radius-md);
-            padding: 14px;
-            margin-bottom: 16px;
-            border-left: 3px solid var(--airtime-green);
+            padding: 16px;
+            margin-bottom: 20px;
         }
 
         .review-header {
             display: flex;
             align-items: center;
             gap: 8px;
-            margin-bottom: 8px;
+            margin-bottom: 10px;
         }
 
         .review-stars {
-            font-size: 12px;
-            color: var(--airtime-green);
+            font-size: 11px;
         }
 
         .review-name {
@@ -609,8 +592,8 @@
 
         .review-text {
             font-size: 13px;
-            color: var(--text-primary);
-            line-height: 1.5;
+            color: var(--text-secondary);
+            line-height: 1.6;
             font-style: italic;
         }
 
@@ -619,30 +602,11 @@
             color: var(--text-primary);
         }
 
-        /* Nearby Stores Component */
-        .nearby-stores {
-            background: var(--airtime-green);
-            border-radius: var(--radius-md);
-            padding: 12px 16px;
-            margin-bottom: 16px;
-            display: flex;
-            align-items: center;
-            gap: 10px;
-            color: white;
-        }
-
-        .nearby-stores .icon {
-            font-size: 20px;
-        }
-
-        .nearby-stores .text {
-            font-size: 13px;
-            font-weight: 600;
-            line-height: 1.3;
-        }
-
-        .nearby-stores .highlight {
-            font-weight: 800;
+        /* Section Divider */
+        .section-divider {
+            height: 1px;
+            background: var(--border);
+            margin: 24px 0;
         }
 
         /* Brand Carousel */
@@ -665,49 +629,49 @@
             font-weight: 700;
         }
 
-        /* Spending Insight Banner */
+        /* Spending Insight Banner - Refined */
         .spending-insight {
-            background: linear-gradient(135deg, var(--airtime-orange-light) 0%, rgba(255, 235, 220, 1) 100%);
+            background: white;
             border-radius: var(--radius-md);
-            padding: 16px;
-            margin-bottom: 16px;
-            border-left: 4px solid var(--airtime-orange);
+            padding: 20px;
+            margin-bottom: 24px;
+            border-left: 3px solid var(--airtime-orange);
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.04);
         }
 
         .insight-label {
-            display: flex;
+            display: inline-flex;
             align-items: center;
             gap: 6px;
-            font-size: 10px;
-            font-weight: 800;
-            letter-spacing: 0.5px;
+            font-size: 9px;
+            font-weight: 700;
+            letter-spacing: 0.8px;
             text-transform: uppercase;
             color: var(--airtime-orange);
-            margin-bottom: 8px;
+            margin-bottom: 12px;
         }
 
         .insight-label .icon {
-            font-size: 14px;
+            font-size: 12px;
         }
 
         .insight-main {
-            font-size: 14px;
+            font-size: 15px;
             font-weight: 600;
             color: var(--text-primary);
-            line-height: 1.5;
-            margin-bottom: 6px;
+            line-height: 1.6;
+            margin-bottom: 8px;
         }
 
         .insight-amount {
-            font-size: 18px;
-            font-weight: 800;
+            font-weight: 700;
             color: var(--airtime-orange);
         }
 
         .insight-detail {
-            font-size: 12px;
+            font-size: 13px;
             color: var(--text-secondary);
-            line-height: 1.4;
+            line-height: 1.5;
         }
 
         .insight-highlight {
@@ -757,30 +721,41 @@
             color: white;
             font-size: 14px;
             font-weight: 700;
-            letter-spacing: 0.5px;
+            letter-spacing: 0.3px;
             text-transform: uppercase;
             padding: 16px 24px;
             border-radius: var(--radius-full);
             width: 100%;
             border: none;
-            box-shadow: 0 2px 8px rgba(255, 102, 51, 0.3);
+            box-shadow: 0 2px 12px rgba(255, 102, 51, 0.25);
             cursor: pointer;
-            margin-bottom: 10px;
+            margin-bottom: 12px;
+            transition: all 0.2s ease;
+        }
+
+        .button-primary:hover {
+            box-shadow: 0 4px 16px rgba(255, 102, 51, 0.35);
+            transform: translateY(-1px);
         }
 
         .button-secondary-outline {
             background: white;
-            color: var(--text-primary);
-            font-size: 14px;
-            font-weight: 700;
-            letter-spacing: 0.5px;
-            text-transform: uppercase;
+            color: var(--text-secondary);
+            font-size: 13px;
+            font-weight: 600;
+            letter-spacing: 0.2px;
+            text-transform: none;
             padding: 14px 24px;
             border-radius: var(--radius-full);
             width: 100%;
-            border: 2px solid var(--border);
+            border: 1px solid var(--border);
             cursor: pointer;
-            margin-bottom: 12px;
+            margin-bottom: 16px;
+            transition: all 0.2s ease;
+        }
+
+        .button-secondary-outline:hover {
+            border-color: var(--text-secondary);
         }
 
         .ob-disclosure {
@@ -1342,13 +1317,28 @@
                             </div>
                         </div>
 
-                        <!-- Trust & Payment - MOVED UP -->
-                        <div class="trust-payment-row">
-                            <div class="trust-box">
-                                <div class="trust-stars">⭐⭐⭐⭐</div>
-                                <div class="trust-score">4.2/5</div>
-                                <div class="trust-label">Trustpilot</div>
+                        <!-- Key Information Pills -->
+                        <div class="info-pills">
+                            <div class="info-pill">
+                                <span class="icon">⭐</span>
+                                <span><span class="highlight">4.2/5</span> Trustpilot</span>
                             </div>
+                            <div class="info-pill">
+                                <span class="icon">📍</span>
+                                <span><span class="highlight">3 stores</span> within 20 miles</span>
+                            </div>
+                            <div class="info-pill">
+                                <span class="icon">⚡</span>
+                                <span><span class="highlight">Same-day</span> click & collect</span>
+                            </div>
+                            <div class="info-pill">
+                                <span class="icon">🏃‍♂️</span>
+                                <span>Popular with <span class="highlight">runners & cyclists</span></span>
+                            </div>
+                        </div>
+
+                        <!-- Payment Options -->
+                        <div class="trust-payment-row">
                             <div class="payment-box">
                                 <div class="payment-title">Pay with</div>
                                 <div class="payment-icons">
@@ -1359,27 +1349,7 @@
                             </div>
                         </div>
 
-                        <!-- Member Stat - MOVED UP -->
-                        <div class="member-stat">
-                            🏃‍♂️ Popular with runners & cyclists — 40% of Airtime members shop here
-                        </div>
-
-                        <!-- Nearby Stores - NEW COMPONENT -->
-                        <div class="nearby-stores">
-                            <div class="icon">📍</div>
-                            <div class="text">
-                                <span class="highlight">3 stores</span> within 20 miles of you
-                            </div>
-                        </div>
-
-                        <!-- Same Day Click and Collect -->
-                        <div class="click-collect-banner">
-                            <div class="icon">⚡</div>
-                            <div>
-                                <div class="text">Same day click & collect available</div>
-                                <div class="subtext">Order by 3pm at your nearest store</div>
-                            </div>
-                        </div>
+                        <div class="section-divider"></div>
 
                         <!-- Trustpilot Review -->
                         <div class="trustpilot-review">
@@ -1394,7 +1364,7 @@
 
                         <!-- Brand Carousel -->
                         <div class="brands-carousel">
-                            <div class="brands-carousel-title">Running & cycling brands at JD Sports</div>
+                            <div class="brands-carousel-title">Running & cycling brands available</div>
                             <div class="brands-scroll">
                                 <div class="brand-logo-item nike">✓</div>
                                 <div class="brand-logo-item adidas">⚡</div>
@@ -1405,6 +1375,8 @@
                                 <div class="brand-logo-item">SAUCONY</div>
                             </div>
                         </div>
+
+                        <div class="section-divider"></div>
 
                         <!-- Personalized Deals -->
                         <div class="deals-section">
@@ -1442,9 +1414,11 @@
                             </div>
                         </div>
 
+                        <div class="section-divider"></div>
+
                         <!-- CTAs -->
-                        <button class="button-primary" onclick="startEarning()">START EARNING ON YOUR TRAINING GEAR</button>
-                        <button class="button-secondary-outline" onclick="goToDetail()">VIEW ALL RUNNING & CYCLING KIT</button>
+                        <button class="button-primary" onclick="startEarning()">Start Earning 3%</button>
+                        <button class="button-secondary-outline" onclick="goToDetail()">View full details</button>
 
                         <!-- Disclosure -->
                         <div class="ob-disclosure">
