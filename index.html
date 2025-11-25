@@ -665,6 +665,56 @@
             font-weight: 700;
         }
 
+        /* Spending Insight Banner */
+        .spending-insight {
+            background: linear-gradient(135deg, var(--airtime-orange-light) 0%, rgba(255, 235, 220, 1) 100%);
+            border-radius: var(--radius-md);
+            padding: 16px;
+            margin-bottom: 16px;
+            border-left: 4px solid var(--airtime-orange);
+        }
+
+        .insight-label {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            font-size: 10px;
+            font-weight: 800;
+            letter-spacing: 0.5px;
+            text-transform: uppercase;
+            color: var(--airtime-orange);
+            margin-bottom: 8px;
+        }
+
+        .insight-label .icon {
+            font-size: 14px;
+        }
+
+        .insight-main {
+            font-size: 14px;
+            font-weight: 600;
+            color: var(--text-primary);
+            line-height: 1.5;
+            margin-bottom: 6px;
+        }
+
+        .insight-amount {
+            font-size: 18px;
+            font-weight: 800;
+            color: var(--airtime-orange);
+        }
+
+        .insight-detail {
+            font-size: 12px;
+            color: var(--text-secondary);
+            line-height: 1.4;
+        }
+
+        .insight-highlight {
+            font-weight: 600;
+            color: var(--text-primary);
+        }
+
         .brands-scroll {
             display: flex;
             gap: 12px;
@@ -1278,9 +1328,18 @@
                             <div class="reward-badge-large">3%</div>
                         </div>
 
-                        <!-- Personalized Title -->
-                        <div class="spend-reference">
-                            <span class="user-name">Julian</span>, we noticed you love running & cycling — earn 3% on gear from brands you trust
+                        <!-- Spending Insight Banner -->
+                        <div class="spending-insight">
+                            <div class="insight-label">
+                                <span class="icon">💡</span>
+                                <span>SWITCH OPPORTUNITY IDENTIFIED</span>
+                            </div>
+                            <div class="insight-main">
+                                We analyzed your spending and found <span class="insight-amount">£127</span> spent on running gear at Foot Locker last month
+                            </div>
+                            <div class="insight-detail">
+                                <span class="insight-highlight">Julian</span>, switch to JD Sports and start earning <span class="insight-highlight">3% rewards</span> on the same gear from brands you already buy
+                            </div>
                         </div>
 
                         <!-- Trust & Payment - MOVED UP -->
