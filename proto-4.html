@@ -546,6 +546,203 @@
         .empty-state .description {
             font-size: 14px;
         }
+
+        /* Linked Cards Wallet */
+        .linked-cards-section {
+            padding: 20px 16px;
+            background: linear-gradient(135deg, #f8f9fa 0%, #ffffff 100%);
+            margin: 16px 16px 0;
+            border-radius: var(--radius-lg);
+        }
+
+        .linked-cards-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 16px;
+        }
+
+        .linked-cards-title {
+            font-size: 14px;
+            font-weight: 800;
+            letter-spacing: 0.5px;
+            text-transform: uppercase;
+            color: var(--text-primary);
+        }
+
+        .linked-cards-count {
+            font-size: 12px;
+            color: var(--text-secondary);
+            background: white;
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-weight: 600;
+        }
+
+        .wallet-container {
+            position: relative;
+            height: 180px;
+            margin-bottom: 16px;
+        }
+
+        .card {
+            position: absolute;
+            width: 280px;
+            height: 160px;
+            border-radius: 16px;
+            padding: 20px;
+            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            cursor: pointer;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+
+        .card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 12px 32px rgba(0, 0, 0, 0.2);
+        }
+
+        .card.visa {
+            background: linear-gradient(135deg, #1a1f71 0%, #2e3a99 100%);
+            left: 0;
+            top: 0;
+            z-index: 3;
+        }
+
+        .card.mastercard {
+            background: linear-gradient(135deg, #1e1e1e 0%, #333333 100%);
+            left: 40px;
+            top: 10px;
+            z-index: 2;
+        }
+
+        .card-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+        }
+
+        .card-chip {
+            width: 40px;
+            height: 30px;
+            background: linear-gradient(135deg, #f0c05a 0%, #e0a944 100%);
+            border-radius: 6px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .card-chip::before {
+            content: '';
+            position: absolute;
+            top: 4px;
+            left: 4px;
+            right: 4px;
+            bottom: 4px;
+            border: 1px solid rgba(0, 0, 0, 0.1);
+            border-radius: 3px;
+        }
+
+        .card-logo {
+            height: 30px;
+            display: flex;
+            align-items: center;
+            font-weight: 700;
+            color: white;
+        }
+
+        .visa-logo {
+            font-size: 24px;
+            font-style: italic;
+            letter-spacing: 2px;
+        }
+
+        .mastercard-logo {
+            display: flex;
+            gap: -8px;
+        }
+
+        .mastercard-circle {
+            width: 24px;
+            height: 24px;
+            border-radius: 50%;
+        }
+
+        .mastercard-circle.red {
+            background: #eb001b;
+            margin-right: -8px;
+        }
+
+        .mastercard-circle.orange {
+            background: #ff5f00;
+        }
+
+        .card-number {
+            color: white;
+            font-size: 18px;
+            letter-spacing: 2px;
+            font-weight: 500;
+            margin: 16px 0 12px;
+        }
+
+        .card-footer {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-end;
+        }
+
+        .card-holder {
+            color: rgba(255, 255, 255, 0.9);
+            font-size: 11px;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .card-expiry {
+            color: rgba(255, 255, 255, 0.7);
+            font-size: 11px;
+            font-weight: 500;
+        }
+
+        .card-status {
+            position: absolute;
+            top: 12px;
+            left: 12px;
+            background: var(--airtime-green);
+            color: white;
+            font-size: 9px;
+            font-weight: 700;
+            padding: 4px 8px;
+            border-radius: 12px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .add-card-button {
+            background: white;
+            border: 2px dashed var(--airtime-orange);
+            color: var(--airtime-orange);
+            font-size: 13px;
+            font-weight: 700;
+            letter-spacing: 0.3px;
+            text-transform: uppercase;
+            padding: 14px 24px;
+            border-radius: var(--radius-full);
+            width: 100%;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+        }
+
+        .add-card-button:hover {
+            background: var(--airtime-orange-light);
+            border-color: var(--airtime-orange);
+        }
     </style>
 </head>
 <body>
@@ -643,6 +840,57 @@
                 <div class="subtle-info">
                     💳 Seamlessly shop on your linked card to earn at any of these retailers
                 </div>
+
+                <!-- Linked Cards Wallet -->
+                <div class="linked-cards-section">
+                    <div class="linked-cards-header">
+                        <div class="linked-cards-title">💳 Linked Cards</div>
+                        <div class="linked-cards-count">2 Cards</div>
+                    </div>
+
+                    <div class="wallet-container">
+                        <!-- Visa Card -->
+                        <div class="card visa">
+                            <div class="card-status">✓ ACTIVE</div>
+                            <div class="card-header">
+                                <div class="card-chip"></div>
+                                <div class="card-logo">
+                                    <div class="visa-logo">VISA</div>
+                                </div>
+                            </div>
+                            <div class="card-number">•••• •••• •••• 4242</div>
+                            <div class="card-footer">
+                                <div class="card-holder">Julian Dunn</div>
+                                <div class="card-expiry">12/26</div>
+                            </div>
+                        </div>
+
+                        <!-- Mastercard -->
+                        <div class="card mastercard">
+                            <div class="card-status">✓ ACTIVE</div>
+                            <div class="card-header">
+                                <div class="card-chip"></div>
+                                <div class="card-logo">
+                                    <div class="mastercard-logo">
+                                        <div class="mastercard-circle red"></div>
+                                        <div class="mastercard-circle orange"></div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="card-number">•••• •••• •••• 8888</div>
+                            <div class="card-footer">
+                                <div class="card-holder">Julian Dunn</div>
+                                <div class="card-expiry">09/27</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <button class="add-card-button" onclick="alert('Add new card feature coming soon!')">
+                        <span>➕</span>
+                        <span>Add Another Card</span>
+                    </button>
+                </div>
+
                 <div class="category-tabs-container">
                     <div class="category-tabs" id="cardLinkedTabs"></div>
                 </div>
