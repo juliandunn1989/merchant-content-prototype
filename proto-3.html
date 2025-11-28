@@ -479,8 +479,9 @@
             opacity: 1;
         }
 
-        .toast.favourite {
+        .toast.activated {
             border: 2px solid var(--airtime-green);
+            background: linear-gradient(135deg, #ffffff 0%, #f0fff4 100%);
         }
 
         .toast.dismiss {
@@ -489,6 +490,76 @@
 
         .toast-icon {
             font-size: 24px;
+        }
+
+        .toast-content {
+            display: flex;
+            flex-direction: column;
+            gap: 4px;
+        }
+
+        .toast-title {
+            font-weight: 700;
+            color: var(--text-primary);
+        }
+
+        .toast-subtitle {
+            font-size: 12px;
+            font-weight: 500;
+            color: var(--text-secondary);
+        }
+
+        /* Fireworks Animation */
+        .fireworks-container {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 9999;
+            overflow: hidden;
+        }
+
+        .firework {
+            position: absolute;
+            width: 4px;
+            height: 4px;
+            border-radius: 50%;
+            animation: firework 1s ease-out forwards;
+        }
+
+        @keyframes firework {
+            0% {
+                transform: translate(0, 0);
+                opacity: 1;
+            }
+            100% {
+                transform: translate(var(--x), var(--y));
+                opacity: 0;
+            }
+        }
+
+        .sparkle {
+            position: absolute;
+            font-size: 20px;
+            animation: sparkle 1s ease-out forwards;
+            pointer-events: none;
+        }
+
+        @keyframes sparkle {
+            0% {
+                transform: translateY(0) scale(0);
+                opacity: 1;
+            }
+            50% {
+                transform: translateY(-30px) scale(1.2);
+                opacity: 1;
+            }
+            100% {
+                transform: translateY(-60px) scale(0.8);
+                opacity: 0;
+            }
         }
 
         /* Bottom Navigation */
@@ -545,8 +616,8 @@
                 </div>
                 <div class="header-icons">
                     <div class="header-icon">
-                        <span>❤️</span>
-                        <span id="favouritesCount">0</span>
+                        <span>✓</span>
+                        <span id="activatedCount">0</span>
                     </div>
                     <div class="header-icon">
                         <span>⚡</span>
@@ -564,8 +635,8 @@
             <div class="swipe-section" id="swipeSection">
                 <div class="swipe-header">
                     <div class="new-badge">🆕 NEW RETAILERS</div>
-                    <div class="swipe-title">Discover & Save</div>
-                    <div class="swipe-subtitle">Swipe right to save your favourites</div>
+                    <div class="swipe-title">Discover & Activate</div>
+                    <div class="swipe-subtitle">Swipe right to activate retailers</div>
                 </div>
 
                 <!-- Swipe Cards -->
@@ -582,7 +653,7 @@
                 <div class="swipe-stats">
                     <div class="stat-item">
                         <div class="stat-value" id="savedCount">0</div>
-                        <div class="stat-label">Saved</div>
+                        <div class="stat-label">Activated</div>
                     </div>
                     <div class="stat-item">
                         <div class="stat-value" id="viewedCount">0</div>
@@ -596,10 +667,16 @@
             </div>
         </div>
 
+        <!-- Fireworks Container -->
+        <div class="fireworks-container" id="fireworksContainer"></div>
+
         <!-- Toast Notification -->
         <div class="toast" id="toast">
             <div class="toast-icon" id="toastIcon"></div>
-            <div id="toastMessage"></div>
+            <div class="toast-content">
+                <div class="toast-title" id="toastTitle"></div>
+                <div class="toast-subtitle" id="toastSubtitle"></div>
+            </div>
         </div>
 
         <!-- Bottom Navigation -->
@@ -609,8 +686,8 @@
                 <span>Discover</span>
             </div>
             <div class="item">
-                <span>❤️</span>
-                <span>Favourites</span>
+                <span>✓</span>
+                <span>Active</span>
             </div>
             <div class="item">
                 <span>💳</span>
@@ -750,7 +827,7 @@
                 <div class="card-image" style="background: ${gradients[gradientIndex]}">
                     <span>${retailer.emoji}</span>
                     <div class="card-offer-badge">${retailer.offerRate}%</div>
-                    <div class="swipe-indicator like">SAVE</div>
+                    <div class="swipe-indicator like">ACTIVATE</div>
                     <div class="swipe-indicator nope">PASS</div>
                 </div>
                 <div class="card-content">
@@ -868,10 +945,14 @@
             savedCount++;
             viewedCount++;
 
+            // Create fireworks effect
+            createFireworks();
+
             showToast(
-                isSuper ? '⭐' : '❤️',
-                isSuper ? `Super liked ${retailer.name}!` : `Saved ${retailer.name} to favourites!`,
-                'favourite'
+                isSuper ? '⭐' : '✓',
+                isSuper ? `${retailer.name} Activated!` : `${retailer.name} Activated!`,
+                `Spend on your linked card to earn at ${retailer.name}`,
+                'activated'
             );
 
             setTimeout(() => {
@@ -887,7 +968,7 @@
             card.classList.add('swiped-left');
             viewedCount++;
 
-            showToast('👋', `Passed on ${retailer.name}`, 'dismiss');
+            showToast('👋', `Passed on ${retailer.name}`, '', 'dismiss');
 
             setTimeout(() => {
                 currentIndex++;
@@ -896,18 +977,68 @@
             }, 300);
         }
 
+        // Create fireworks effect
+        function createFireworks() {
+            const container = document.getElementById('fireworksContainer');
+            const colors = ['#FF6633', '#2ECC71', '#5DADE2', '#F4D03F', '#FFB6C1'];
+
+            // Create multiple firework bursts
+            for (let burst = 0; burst < 3; burst++) {
+                setTimeout(() => {
+                    const centerX = Math.random() * window.innerWidth;
+                    const centerY = 100 + Math.random() * 200;
+
+                    // Create particles for each burst
+                    for (let i = 0; i < 30; i++) {
+                        const particle = document.createElement('div');
+                        particle.className = 'firework';
+                        particle.style.left = centerX + 'px';
+                        particle.style.top = centerY + 'px';
+                        particle.style.background = colors[Math.floor(Math.random() * colors.length)];
+
+                        const angle = (Math.PI * 2 * i) / 30;
+                        const velocity = 50 + Math.random() * 50;
+                        const x = Math.cos(angle) * velocity;
+                        const y = Math.sin(angle) * velocity;
+
+                        particle.style.setProperty('--x', x + 'px');
+                        particle.style.setProperty('--y', y + 'px');
+
+                        container.appendChild(particle);
+
+                        setTimeout(() => particle.remove(), 1000);
+                    }
+
+                    // Add sparkle emojis
+                    const sparkles = ['✨', '⭐', '💫', '🎉', '🎊'];
+                    for (let i = 0; i < 5; i++) {
+                        const sparkle = document.createElement('div');
+                        sparkle.className = 'sparkle';
+                        sparkle.textContent = sparkles[Math.floor(Math.random() * sparkles.length)];
+                        sparkle.style.left = (centerX - 50 + Math.random() * 100) + 'px';
+                        sparkle.style.top = centerY + 'px';
+                        container.appendChild(sparkle);
+
+                        setTimeout(() => sparkle.remove(), 1000);
+                    }
+                }, burst * 200);
+            }
+        }
+
         // Show toast notification
-        function showToast(icon, message, type) {
+        function showToast(icon, title, subtitle, type) {
             const toast = document.getElementById('toast');
             const toastIcon = document.getElementById('toastIcon');
-            const toastMessage = document.getElementById('toastMessage');
+            const toastTitle = document.getElementById('toastTitle');
+            const toastSubtitle = document.getElementById('toastSubtitle');
 
             toastIcon.textContent = icon;
-            toastMessage.textContent = message;
+            toastTitle.textContent = title;
+            toastSubtitle.textContent = subtitle;
             toast.className = `toast ${type}`;
 
             setTimeout(() => toast.classList.add('show'), 10);
-            setTimeout(() => toast.classList.remove('show'), 2000);
+            setTimeout(() => toast.classList.remove('show'), 3000);
         }
 
         // Update stats
@@ -915,7 +1046,7 @@
             document.getElementById('savedCount').textContent = savedCount;
             document.getElementById('viewedCount').textContent = viewedCount;
             document.getElementById('remainingCount').textContent = Math.max(0, currentRetailers.length - currentIndex);
-            document.getElementById('favouritesCount').textContent = savedCount;
+            document.getElementById('activatedCount').textContent = savedCount;
         }
 
         // Show empty state
