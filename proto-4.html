@@ -760,11 +760,11 @@
 
             <!-- Header -->
             <div class="header">
-                <div style="display: flex; gap: 6px;">
-                    <a href="index.html" style="background: white; color: var(--text-primary); padding: 6px 10px; border-radius: 20px; font-size: 10px; font-weight: 700; text-decoration: none; border: 2px solid var(--border);">P1</a>
-                    <a href="proto-2.html" style="background: white; color: var(--text-primary); padding: 6px 10px; border-radius: 20px; font-size: 10px; font-weight: 700; text-decoration: none; border: 2px solid var(--border);">P2</a>
-                    <a href="proto-3.html" style="background: white; color: var(--text-primary); padding: 6px 10px; border-radius: 20px; font-size: 10px; font-weight: 700; text-decoration: none; border: 2px solid var(--border);">P3</a>
-                    <a href="proto-4.html" style="background: var(--airtime-orange); color: white; padding: 6px 10px; border-radius: 20px; font-size: 10px; font-weight: 700; text-decoration: none;">P4</a>
+                <div style="display: flex; gap: 4px;">
+                    <a href="index.html" style="background: white; color: var(--text-primary); padding: 6px 8px; border-radius: 20px; font-size: 9px; font-weight: 700; text-decoration: none; border: 2px solid var(--border);">P1</a>
+                    <a href="proto-2.html" style="background: white; color: var(--text-primary); padding: 6px 8px; border-radius: 20px; font-size: 9px; font-weight: 700; text-decoration: none; border: 2px solid var(--border);">P2</a>
+                    <a href="proto-3.html" style="background: white; color: var(--text-primary); padding: 6px 8px; border-radius: 20px; font-size: 9px; font-weight: 700; text-decoration: none; border: 2px solid var(--border);">P3</a>
+                    <a href="proto-4.html" style="background: var(--airtime-orange); color: white; padding: 6px 8px; border-radius: 20px; font-size: 9px; font-weight: 700; text-decoration: none;">P4</a>
                 </div>
                 <div class="header-icons">
                     <div class="header-icon">
@@ -1032,8 +1032,7 @@
                 content.classList.toggle('active', content.dataset.category === category);
             });
 
-            // Scroll to top
-            window.scrollTo({ top: 0, behavior: 'smooth' });
+            // Don't scroll to top - stay anchored at current position
         }
 
         // Function to shuffle array
