@@ -1,0 +1,1014 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Airtime - Proto 2: Dynamic Retailers</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            /* Airtime Colors */
+            --airtime-orange: #FF6633;
+            --airtime-orange-light: #FFF0EB;
+            --airtime-blue: #5DADE2;
+            --airtime-blue-light: #E8F4FC;
+            --airtime-green: #2ECC71;
+            --airtime-pink: #FFB6C1;
+            --airtime-yellow: #F4D03F;
+            --background: #FFFFFF;
+            --surface: #F7F7F7;
+            --surface-elevated: #FFFFFF;
+            --text-primary: #1A1A1A;
+            --text-secondary: #666666;
+            --text-tertiary: #999999;
+            --border: #E5E5E5;
+
+            /* Spacing */
+            --space-xs: 4px;
+            --space-sm: 8px;
+            --space-md: 16px;
+            --space-lg: 24px;
+            --space-xl: 32px;
+
+            /* Border Radius */
+            --radius-sm: 8px;
+            --radius-md: 12px;
+            --radius-lg: 16px;
+            --radius-full: 9999px;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Display', 'Segoe UI', sans-serif;
+            background: var(--background);
+            color: var(--text-primary);
+            -webkit-font-smoothing: antialiased;
+            overflow-x: hidden;
+        }
+
+        /* Mobile Container */
+        .mobile-container {
+            max-width: 375px;
+            margin: 0 auto;
+            background: var(--background);
+            min-height: 100vh;
+            position: relative;
+            box-shadow: 0 0 50px rgba(0, 0, 0, 0.1);
+        }
+
+        /* Status Bar */
+        .status-bar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 8px 16px;
+            font-size: 13px;
+            font-weight: 600;
+        }
+
+        .status-bar .time {
+            color: var(--text-primary);
+        }
+
+        .status-bar .icons {
+            display: flex;
+            gap: 4px;
+            color: var(--text-primary);
+        }
+
+        /* Header */
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 16px;
+            gap: 12px;
+        }
+
+        .airtime-logo {
+            background: transparent;
+            border: 2px solid var(--airtime-orange);
+            color: var(--airtime-orange);
+            padding: 6px 14px;
+            border-radius: var(--radius-full);
+            font-size: 11px;
+            font-weight: 800;
+            letter-spacing: 0.5px;
+            text-transform: uppercase;
+        }
+
+        .header-icons {
+            display: flex;
+            gap: 12px;
+            background: var(--text-primary);
+            padding: 6px 12px;
+            border-radius: var(--radius-full);
+            align-items: center;
+        }
+
+        .header-icon {
+            display: flex;
+            align-items: center;
+            gap: 4px;
+            color: white;
+            font-size: 11px;
+            font-weight: 600;
+        }
+
+        /* Hero Carousel */
+        .hero-carousel {
+            margin: 16px;
+            position: relative;
+            border-radius: var(--radius-md);
+            overflow: hidden;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            padding: 40px 24px;
+            text-align: center;
+            color: white;
+        }
+
+        .hero-logo {
+            width: 80px;
+            height: 80px;
+            background: white;
+            border-radius: 50%;
+            margin: 0 auto 16px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 24px;
+            font-weight: 700;
+            color: var(--text-primary);
+        }
+
+        .badge-for-you {
+            background: var(--airtime-pink);
+            color: var(--text-primary);
+            font-size: 11px;
+            font-weight: 700;
+            padding: 4px 12px;
+            border-radius: 12px;
+            display: inline-block;
+            margin-bottom: 12px;
+        }
+
+        .hero-title {
+            font-size: 24px;
+            font-weight: 800;
+            letter-spacing: 0.5px;
+            text-transform: uppercase;
+            margin-bottom: 8px;
+        }
+
+        .hero-subtitle {
+            font-size: 13px;
+            margin-bottom: 20px;
+            opacity: 0.9;
+        }
+
+        .button-outlined {
+            background: transparent;
+            color: white;
+            font-size: 14px;
+            font-weight: 700;
+            letter-spacing: 0.5px;
+            text-transform: uppercase;
+            padding: 14px 24px;
+            border-radius: var(--radius-full);
+            border: 2px solid rgba(255, 255, 255, 0.8);
+            cursor: pointer;
+        }
+
+        .carousel-dots {
+            display: flex;
+            gap: 6px;
+            justify-content: center;
+            margin-top: 16px;
+        }
+
+        .dot {
+            width: 6px;
+            height: 6px;
+            background: rgba(255, 255, 255, 0.5);
+            border-radius: 50%;
+        }
+
+        .dot.active {
+            background: white;
+        }
+
+        /* Quick Access Pills */
+        .quick-access-container {
+            display: flex;
+            gap: 12px;
+            padding: 16px;
+            overflow-x: auto;
+            -webkit-overflow-scrolling: touch;
+            scrollbar-width: none;
+        }
+
+        .quick-access-container::-webkit-scrollbar {
+            display: none;
+        }
+
+        .quick-access-pill {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 8px;
+            min-width: 72px;
+        }
+
+        .icon-circle {
+            width: 64px;
+            height: 64px;
+            border-radius: 50%;
+            border: 2px dashed var(--airtime-blue);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: white;
+            font-size: 24px;
+        }
+
+        .quick-access-pill .label {
+            font-size: 12px;
+            color: var(--text-primary);
+            text-align: center;
+        }
+
+        /* Linked Cards Wallet */
+        .linked-cards-section {
+            padding: 24px 16px;
+            background: linear-gradient(135deg, #f8f9fa 0%, #ffffff 100%);
+        }
+
+        .linked-cards-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 16px;
+        }
+
+        .linked-cards-title {
+            font-size: 14px;
+            font-weight: 800;
+            letter-spacing: 0.5px;
+            text-transform: uppercase;
+            color: var(--text-primary);
+        }
+
+        .linked-cards-count {
+            font-size: 12px;
+            color: var(--text-secondary);
+            background: white;
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-weight: 600;
+        }
+
+        .wallet-container {
+            position: relative;
+            height: 180px;
+            margin-bottom: 16px;
+        }
+
+        .card {
+            position: absolute;
+            width: 280px;
+            height: 160px;
+            border-radius: 16px;
+            padding: 20px;
+            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            cursor: pointer;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+
+        .card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 12px 32px rgba(0, 0, 0, 0.2);
+        }
+
+        .card.visa {
+            background: linear-gradient(135deg, #1a1f71 0%, #2e3a99 100%);
+            left: 0;
+            top: 0;
+            z-index: 3;
+        }
+
+        .card.mastercard {
+            background: linear-gradient(135deg, #1e1e1e 0%, #333333 100%);
+            left: 40px;
+            top: 10px;
+            z-index: 2;
+        }
+
+        .card-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+        }
+
+        .card-chip {
+            width: 40px;
+            height: 30px;
+            background: linear-gradient(135deg, #f0c05a 0%, #e0a944 100%);
+            border-radius: 6px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .card-chip::before {
+            content: '';
+            position: absolute;
+            top: 4px;
+            left: 4px;
+            right: 4px;
+            bottom: 4px;
+            border: 1px solid rgba(0, 0, 0, 0.1);
+            border-radius: 3px;
+        }
+
+        .card-logo {
+            height: 30px;
+            display: flex;
+            align-items: center;
+            font-weight: 700;
+            color: white;
+        }
+
+        .visa-logo {
+            font-size: 24px;
+            font-style: italic;
+            letter-spacing: 2px;
+        }
+
+        .mastercard-logo {
+            display: flex;
+            gap: -8px;
+        }
+
+        .mastercard-circle {
+            width: 24px;
+            height: 24px;
+            border-radius: 50%;
+        }
+
+        .mastercard-circle.red {
+            background: #eb001b;
+            margin-right: -8px;
+        }
+
+        .mastercard-circle.orange {
+            background: #ff5f00;
+        }
+
+        .card-number {
+            color: white;
+            font-size: 18px;
+            letter-spacing: 2px;
+            font-weight: 500;
+            margin: 16px 0 12px;
+        }
+
+        .card-footer {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-end;
+        }
+
+        .card-holder {
+            color: rgba(255, 255, 255, 0.9);
+            font-size: 11px;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .card-expiry {
+            color: rgba(255, 255, 255, 0.7);
+            font-size: 11px;
+            font-weight: 500;
+        }
+
+        .card-status {
+            position: absolute;
+            top: 12px;
+            left: 12px;
+            background: var(--airtime-green);
+            color: white;
+            font-size: 9px;
+            font-weight: 700;
+            padding: 4px 8px;
+            border-radius: 12px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .add-card-button {
+            background: white;
+            border: 2px dashed var(--airtime-orange);
+            color: var(--airtime-orange);
+            font-size: 13px;
+            font-weight: 700;
+            letter-spacing: 0.3px;
+            text-transform: uppercase;
+            padding: 14px 24px;
+            border-radius: var(--radius-full);
+            width: 100%;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+        }
+
+        .add-card-button:hover {
+            background: var(--airtime-orange-light);
+            border-color: var(--airtime-orange);
+        }
+
+        /* Tab Navigation */
+        .tabs-container {
+            margin: 24px 0 0;
+            border-bottom: 1px solid var(--border);
+            position: sticky;
+            top: 0;
+            background: white;
+            z-index: 100;
+        }
+
+        .tabs {
+            display: flex;
+            gap: 8px;
+            padding: 0 16px;
+            overflow-x: auto;
+            -webkit-overflow-scrolling: touch;
+            scrollbar-width: none;
+        }
+
+        .tabs::-webkit-scrollbar {
+            display: none;
+        }
+
+        .tab {
+            padding: 12px 16px;
+            font-size: 13px;
+            font-weight: 700;
+            letter-spacing: 0.3px;
+            text-transform: uppercase;
+            color: var(--text-secondary);
+            cursor: pointer;
+            white-space: nowrap;
+            border-bottom: 3px solid transparent;
+            transition: all 0.2s ease;
+        }
+
+        .tab.active {
+            color: var(--airtime-orange);
+            border-bottom-color: var(--airtime-orange);
+        }
+
+        /* Tab Content */
+        .tab-content {
+            display: none;
+            padding-bottom: 100px;
+        }
+
+        .tab-content.active {
+            display: block;
+        }
+
+        /* Carousel Sections */
+        .carousel-section {
+            margin: 24px 0;
+        }
+
+        .carousel-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0 16px 12px;
+        }
+
+        .carousel-title {
+            font-size: 16px;
+            font-weight: 800;
+            letter-spacing: 0.5px;
+            text-transform: uppercase;
+            color: var(--text-primary);
+        }
+
+        .carousel-subtitle {
+            font-size: 12px;
+            color: var(--text-secondary);
+            padding: 0 16px 12px;
+        }
+
+        .see-all {
+            font-size: 13px;
+            font-weight: 600;
+            color: var(--airtime-orange);
+            cursor: pointer;
+        }
+
+        /* Retailer Cards */
+        .retailer-scroll {
+            display: flex;
+            gap: 12px;
+            padding: 0 16px;
+            overflow-x: auto;
+            -webkit-overflow-scrolling: touch;
+            scrollbar-width: none;
+        }
+
+        .retailer-scroll::-webkit-scrollbar {
+            display: none;
+        }
+
+        .retailer-card {
+            width: 160px;
+            flex-shrink: 0;
+            border-radius: var(--radius-md);
+            overflow: hidden;
+            background: white;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
+            cursor: pointer;
+            transition: transform 0.2s ease;
+        }
+
+        .retailer-card:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.12);
+        }
+
+        .retailer-card .image {
+            height: 160px;
+            width: 100%;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            position: relative;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 48px;
+        }
+
+        .retailer-card .offer-badge {
+            position: absolute;
+            top: 12px;
+            right: 12px;
+            background: var(--airtime-orange);
+            color: white;
+            font-size: 14px;
+            font-weight: 700;
+            padding: 6px 12px;
+            border-radius: 20px;
+        }
+
+        .retailer-card .name {
+            font-size: 13px;
+            font-weight: 800;
+            text-transform: uppercase;
+            letter-spacing: 0.3px;
+            padding: 12px 12px 4px;
+        }
+
+        .retailer-card .category {
+            font-size: 11px;
+            color: var(--text-secondary);
+            padding: 0 12px 4px;
+        }
+
+        .retailer-card .reward {
+            font-size: 12px;
+            color: var(--text-secondary);
+            padding: 0 12px 12px;
+        }
+
+        /* Bottom Navigation */
+        .bottom-nav {
+            position: fixed;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            max-width: 375px;
+            width: 100%;
+            background: white;
+            border-top: 1px solid var(--border);
+            display: flex;
+            justify-content: space-around;
+            padding: 8px 0 24px;
+        }
+
+        .bottom-nav .item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 4px;
+            color: var(--text-tertiary);
+            font-size: 10px;
+            font-weight: 500;
+            cursor: pointer;
+        }
+
+        .bottom-nav .item.active {
+            color: var(--text-primary);
+        }
+
+        /* Empty State */
+        .empty-state {
+            text-align: center;
+            padding: 60px 20px;
+            color: var(--text-secondary);
+        }
+
+        .empty-state .icon {
+            font-size: 48px;
+            margin-bottom: 16px;
+        }
+
+        .empty-state .title {
+            font-size: 16px;
+            font-weight: 700;
+            margin-bottom: 8px;
+            color: var(--text-primary);
+        }
+
+        .empty-state .description {
+            font-size: 14px;
+        }
+    </style>
+</head>
+<body>
+    <div class="mobile-container">
+        <div class="home-content">
+            <!-- Status Bar -->
+            <div class="status-bar">
+                <div class="time">11:59</div>
+                <div class="icons">
+                    <span>📶</span>
+                    <span>📡</span>
+                    <span>🔋</span>
+                </div>
+            </div>
+
+            <!-- Header -->
+            <div class="header">
+                <div class="airtime-logo">AIRTIME UP</div>
+                <div style="display: flex; gap: 8px;">
+                    <a href="index.html" style="background: white; color: var(--text-primary); padding: 6px 12px; border-radius: 20px; font-size: 11px; font-weight: 700; text-decoration: none; border: 2px solid var(--border);">PROTO 1</a>
+                    <a href="proto-2.html" style="background: var(--airtime-orange); color: white; padding: 6px 12px; border-radius: 20px; font-size: 11px; font-weight: 700; text-decoration: none;">PROTO 2</a>
+                </div>
+                <div class="header-icons">
+                    <div class="header-icon">
+                        <span>🔒</span>
+                        <span>0</span>
+                    </div>
+                    <div class="header-icon">
+                        <span>⚡</span>
+                        <span>18</span>
+                    </div>
+                    <div class="header-icon">
+                        <span>💬</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Hero Carousel -->
+            <div class="hero-carousel">
+                <div class="badge-for-you">FOR YOU</div>
+                <div class="hero-logo">ebay</div>
+                <div class="hero-title">EBAY</div>
+                <div class="hero-subtitle">Visa Only</div>
+                <button class="button-outlined">VIEW YOUR OFFER</button>
+                <div class="carousel-dots">
+                    <div class="dot active"></div>
+                    <div class="dot"></div>
+                    <div class="dot"></div>
+                </div>
+            </div>
+
+            <!-- Quick Access Pills / Stories -->
+            <div class="quick-access-container">
+                <div class="quick-access-pill">
+                    <div class="icon-circle">⭐</div>
+                    <div class="label">Challenge</div>
+                </div>
+                <div class="quick-access-pill">
+                    <div class="icon-circle">🎯</div>
+                    <div class="label">Airtime TIER 2</div>
+                </div>
+                <div class="quick-access-pill">
+                    <div class="icon-circle">🚗</div>
+                    <div class="label">Uber</div>
+                </div>
+                <div class="quick-access-pill">
+                    <div class="icon-circle">💇</div>
+                    <div class="label">ghd</div>
+                </div>
+                <div class="quick-access-pill">
+                    <div class="icon-circle">💄</div>
+                    <div class="label">Kiehl's</div>
+                </div>
+                <div class="quick-access-pill">
+                    <div class="icon-circle">👗</div>
+                    <div class="label">ASOS</div>
+                </div>
+            </div>
+
+            <!-- Linked Cards Wallet -->
+            <div class="linked-cards-section">
+                <div class="linked-cards-header">
+                    <div class="linked-cards-title">💳 Linked Cards</div>
+                    <div class="linked-cards-count">2 Cards</div>
+                </div>
+
+                <div class="wallet-container">
+                    <!-- Visa Card -->
+                    <div class="card visa">
+                        <div class="card-status">✓ ACTIVE</div>
+                        <div class="card-header">
+                            <div class="card-chip"></div>
+                            <div class="card-logo">
+                                <div class="visa-logo">VISA</div>
+                            </div>
+                        </div>
+                        <div class="card-number">•••• •••• •••• 4242</div>
+                        <div class="card-footer">
+                            <div class="card-holder">Julian Dunn</div>
+                            <div class="card-expiry">12/26</div>
+                        </div>
+                    </div>
+
+                    <!-- Mastercard -->
+                    <div class="card mastercard">
+                        <div class="card-status">✓ ACTIVE</div>
+                        <div class="card-header">
+                            <div class="card-chip"></div>
+                            <div class="card-logo">
+                                <div class="mastercard-logo">
+                                    <div class="mastercard-circle red"></div>
+                                    <div class="mastercard-circle orange"></div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="card-number">•••• •••• •••• 8888</div>
+                        <div class="card-footer">
+                            <div class="card-holder">Julian Dunn</div>
+                            <div class="card-expiry">09/27</div>
+                        </div>
+                    </div>
+                </div>
+
+                <button class="add-card-button" onclick="alert('Add new card feature coming soon!')">
+                    <span>➕</span>
+                    <span>Add Another Card</span>
+                </button>
+            </div>
+
+            <!-- Tab Navigation -->
+            <div class="tabs-container">
+                <div class="tabs" id="categoryTabs"></div>
+            </div>
+
+            <!-- Tab Content -->
+            <div id="tabContents"></div>
+        </div>
+
+        <!-- Bottom Navigation -->
+        <div class="bottom-nav">
+            <div class="item active">
+                <span>🏠</span>
+                <span>Home</span>
+            </div>
+            <div class="item">
+                <span>➕</span>
+                <span>Extras</span>
+            </div>
+            <div class="item">
+                <span>💳</span>
+                <span>Wallet</span>
+            </div>
+            <div class="item">
+                <span>⭐</span>
+                <span>Rewards</span>
+            </div>
+            <div class="item">
+                <span>•••</span>
+                <span>More</span>
+            </div>
+        </div>
+    </div>
+
+    <script src="retailers-data.js"></script>
+    <script>
+        // Gradient backgrounds for retailer cards
+        const gradients = [
+            'linear-gradient(135deg, #667eea 0%, #764ba2 100%)',
+            'linear-gradient(135deg, #f093fb 0%, #f5576c 100%)',
+            'linear-gradient(135deg, #4facfe 0%, #00f2fe 100%)',
+            'linear-gradient(135deg, #43e97b 0%, #38f9d7 100%)',
+            'linear-gradient(135deg, #fa709a 0%, #fee140 100%)',
+            'linear-gradient(135deg, #30cfd0 0%, #330867 100%)',
+            'linear-gradient(135deg, #a8edea 0%, #fed6e3 100%)',
+            'linear-gradient(135deg, #ff9a9e 0%, #fecfef 100%)',
+            'linear-gradient(135deg, #ffecd2 0%, #fcb69f 100%)',
+            'linear-gradient(135deg, #ff6e7f 0%, #bfe9ff 100%)'
+        ];
+
+        // Get unique categories
+        const categoriesArray = [...new Set(retailers.map(r => r.category))].sort();
+
+        // Add "All" category at the beginning
+        categoriesArray.unshift('All');
+
+        // Function to create tabs
+        function createTabs() {
+            const tabsContainer = document.getElementById('categoryTabs');
+            categoriesArray.forEach((category, index) => {
+                const tab = document.createElement('div');
+                tab.className = `tab ${index === 0 ? 'active' : ''}`;
+                tab.textContent = category;
+                tab.onclick = () => switchTab(category);
+                tabsContainer.appendChild(tab);
+            });
+        }
+
+        // Function to switch tabs
+        function switchTab(category) {
+            // Update tab active state
+            const tabs = document.querySelectorAll('.tab');
+            tabs.forEach(tab => {
+                if (tab.textContent === category) {
+                    tab.classList.add('active');
+                } else {
+                    tab.classList.remove('active');
+                }
+            });
+
+            // Update tab content active state
+            const contents = document.querySelectorAll('.tab-content');
+            contents.forEach(content => {
+                if (content.dataset.category === category) {
+                    content.classList.add('active');
+                } else {
+                    content.classList.remove('active');
+                }
+            });
+
+            // Scroll to top
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        // Function to shuffle array
+        function shuffle(array) {
+            const shuffled = [...array];
+            for (let i = shuffled.length - 1; i > 0; i--) {
+                const j = Math.floor(Math.random() * (i + 1));
+                [shuffled[i], shuffled[j]] = [shuffled[j], shuffled[i]];
+            }
+            return shuffled;
+        }
+
+        // Function to create retailer card
+        function createRetailerCard(retailer, gradientIndex) {
+            return `
+                <div class="retailer-card">
+                    <div class="image" style="background: ${gradients[gradientIndex % gradients.length]}">
+                        <span>${retailer.emoji}</span>
+                        <div class="offer-badge">${retailer.offerRate}%</div>
+                    </div>
+                    <div class="name">${retailer.name}</div>
+                    <div class="category">${retailer.category}</div>
+                    <div class="reward">Earn ${retailer.offerRate}% reward</div>
+                </div>
+            `;
+        }
+
+        // Function to create carousel section
+        function createCarousel(title, subtitle, retailers) {
+            if (retailers.length === 0) return '';
+
+            const cards = retailers.map((retailer, index) =>
+                createRetailerCard(retailer, index)
+            ).join('');
+
+            return `
+                <div class="carousel-section">
+                    <div class="carousel-header">
+                        <div class="carousel-title">${title}</div>
+                        <div class="see-all">See all →</div>
+                    </div>
+                    ${subtitle ? `<div class="carousel-subtitle">${subtitle}</div>` : ''}
+                    <div class="retailer-scroll">
+                        ${cards}
+                    </div>
+                </div>
+            `;
+        }
+
+        // Function to create tab content
+        function createTabContent(category) {
+            const tabContent = document.createElement('div');
+            tabContent.className = `tab-content ${category === 'All' ? 'active' : ''}`;
+            tabContent.dataset.category = category;
+
+            let categoryRetailers = category === 'All'
+                ? retailers
+                : retailers.filter(r => r.category === category);
+
+            if (categoryRetailers.length === 0) {
+                tabContent.innerHTML = `
+                    <div class="empty-state">
+                        <div class="icon">🔍</div>
+                        <div class="title">No retailers found</div>
+                        <div class="description">Check back soon for new offers!</div>
+                    </div>
+                `;
+                return tabContent;
+            }
+
+            // Sort retailers by offer rate (high to low) for "We Love"
+            const weLove = [...categoryRetailers]
+                .sort((a, b) => b.offerRate - a.offerRate)
+                .slice(0, 8);
+
+            // "Popular Right Now" - random selection
+            const popularNow = shuffle([...categoryRetailers]).slice(0, 8);
+
+            // "You Might Like" - mid-tier offers (3-6%)
+            const youMightLike = shuffle(
+                categoryRetailers.filter(r => r.offerRate >= 3 && r.offerRate <= 6)
+            ).slice(0, 8);
+
+            let html = '';
+
+            // We Love section - highest offer rates
+            if (weLove.length > 0) {
+                html += createCarousel(
+                    '✨ We Love',
+                    'Top rewards in this category',
+                    weLove
+                );
+            }
+
+            // Popular Right Now section
+            if (popularNow.length > 0) {
+                html += createCarousel(
+                    '🔥 Popular Right Now',
+                    'Trending with Airtime members',
+                    popularNow
+                );
+            }
+
+            // You Might Like section
+            if (youMightLike.length > 0) {
+                html += createCarousel(
+                    '💡 You Might Like',
+                    'Based on your spending patterns',
+                    youMightLike
+                );
+            }
+
+            // New Offers section - recently added or random
+            const newOffers = shuffle([...categoryRetailers]).slice(0, 8);
+            if (newOffers.length > 0) {
+                html += createCarousel(
+                    '🆕 New Offers',
+                    'Fresh deals just for you',
+                    newOffers
+                );
+            }
+
+            tabContent.innerHTML = html;
+            return tabContent;
+        }
+
+        // Initialize the page
+        function init() {
+            createTabs();
+
+            const tabContentsContainer = document.getElementById('tabContents');
+            categoriesArray.forEach(category => {
+                const content = createTabContent(category);
+                tabContentsContainer.appendChild(content);
+            });
+        }
+
+        // Run initialization when DOM is ready
+        if (document.readyState === 'loading') {
+            document.addEventListener('DOMContentLoaded', init);
+        } else {
+            init();
+        }
+    </script>
+</body>
+</html>
