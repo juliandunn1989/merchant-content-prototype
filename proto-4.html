@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>Airtime - Proto 2: Dynamic Retailers</title>
+    <title>Airtime - Proto 4: Shop by Type</title>
     <style>
         * {
             margin: 0;
@@ -85,20 +85,8 @@
             display: flex;
             justify-content: space-between;
             align-items: center;
-            padding: 16px;
-            gap: 12px;
-        }
-
-        .airtime-logo {
-            background: transparent;
-            border: 2px solid var(--airtime-orange);
-            color: var(--airtime-orange);
-            padding: 6px 14px;
-            border-radius: var(--radius-full);
-            font-size: 11px;
-            font-weight: 800;
-            letter-spacing: 0.5px;
-            text-transform: uppercase;
+            padding: 12px 16px;
+            gap: 8px;
         }
 
         .header-icons {
@@ -241,212 +229,111 @@
             text-align: center;
         }
 
-        /* Linked Cards Wallet */
-        .linked-cards-section {
-            padding: 24px 16px;
-            background: linear-gradient(135deg, #f8f9fa 0%, #ffffff 100%);
+        /* Master Tabs */
+        .master-tabs-container {
+            margin: 24px 0 0;
+            border-bottom: 2px solid var(--border);
+            background: white;
+            position: sticky;
+            top: 0;
+            z-index: 200;
         }
 
-        .linked-cards-header {
+        .master-tabs {
             display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 16px;
+            padding: 0 16px;
         }
 
-        .linked-cards-title {
+        .master-tab {
+            flex: 1;
+            padding: 16px;
             font-size: 14px;
             font-weight: 800;
             letter-spacing: 0.5px;
             text-transform: uppercase;
-            color: var(--text-primary);
-        }
-
-        .linked-cards-count {
-            font-size: 12px;
             color: var(--text-secondary);
-            background: white;
-            padding: 4px 12px;
-            border-radius: 20px;
-            font-weight: 600;
-        }
-
-        .wallet-container {
-            position: relative;
-            height: 180px;
-            margin-bottom: 16px;
-        }
-
-        .card {
-            position: absolute;
-            width: 280px;
-            height: 160px;
-            border-radius: 16px;
-            padding: 20px;
-            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15);
-            transition: transform 0.3s ease, box-shadow 0.3s ease;
             cursor: pointer;
-            display: flex;
-            flex-direction: column;
-            justify-content: space-between;
+            text-align: center;
+            border-bottom: 4px solid transparent;
+            transition: all 0.2s ease;
         }
 
-        .card:hover {
-            transform: translateY(-4px);
-            box-shadow: 0 12px 32px rgba(0, 0, 0, 0.2);
+        .master-tab.active {
+            color: var(--airtime-orange);
+            border-bottom-color: var(--airtime-orange);
         }
 
-        .card.visa {
-            background: linear-gradient(135deg, #1a1f71 0%, #2e3a99 100%);
-            left: 0;
-            top: 0;
-            z-index: 3;
+        /* Master Tab Content */
+        .master-tab-content {
+            display: none;
         }
 
-        .card.mastercard {
-            background: linear-gradient(135deg, #1e1e1e 0%, #333333 100%);
-            left: 40px;
-            top: 10px;
-            z-index: 2;
+        .master-tab-content.active {
+            display: block;
         }
 
-        .card-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: flex-start;
-        }
-
-        .card-chip {
-            width: 40px;
-            height: 30px;
-            background: linear-gradient(135deg, #f0c05a 0%, #e0a944 100%);
-            border-radius: 6px;
+        /* Educational Callout */
+        .educational-callout {
+            margin: 20px 16px;
+            padding: 20px;
+            background: linear-gradient(135deg, #FFF5E6 0%, #FFE8CC 100%);
+            border-radius: var(--radius-lg);
+            border: 2px solid var(--airtime-orange);
             position: relative;
             overflow: hidden;
         }
 
-        .card-chip::before {
-            content: '';
+        .educational-callout::before {
+            content: '💡';
             position: absolute;
-            top: 4px;
-            left: 4px;
-            right: 4px;
-            bottom: 4px;
-            border: 1px solid rgba(0, 0, 0, 0.1);
-            border-radius: 3px;
+            top: -10px;
+            right: -10px;
+            font-size: 80px;
+            opacity: 0.1;
         }
 
-        .card-logo {
-            height: 30px;
-            display: flex;
-            align-items: center;
-            font-weight: 700;
-            color: white;
-        }
-
-        .visa-logo {
-            font-size: 24px;
-            font-style: italic;
-            letter-spacing: 2px;
-        }
-
-        .mastercard-logo {
-            display: flex;
-            gap: -8px;
-        }
-
-        .mastercard-circle {
-            width: 24px;
-            height: 24px;
-            border-radius: 50%;
-        }
-
-        .mastercard-circle.red {
-            background: #eb001b;
-            margin-right: -8px;
-        }
-
-        .mastercard-circle.orange {
-            background: #ff5f00;
-        }
-
-        .card-number {
-            color: white;
-            font-size: 18px;
-            letter-spacing: 2px;
-            font-weight: 500;
-            margin: 16px 0 12px;
-        }
-
-        .card-footer {
-            display: flex;
-            justify-content: space-between;
-            align-items: flex-end;
-        }
-
-        .card-holder {
-            color: rgba(255, 255, 255, 0.9);
-            font-size: 11px;
-            font-weight: 600;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-        }
-
-        .card-expiry {
-            color: rgba(255, 255, 255, 0.7);
-            font-size: 11px;
-            font-weight: 500;
-        }
-
-        .card-status {
-            position: absolute;
-            top: 12px;
-            left: 12px;
-            background: var(--airtime-green);
-            color: white;
-            font-size: 9px;
-            font-weight: 700;
-            padding: 4px 8px;
-            border-radius: 12px;
-            text-transform: uppercase;
-            letter-spacing: 0.5px;
-        }
-
-        .add-card-button {
-            background: white;
-            border: 2px dashed var(--airtime-orange);
+        .callout-title {
+            font-size: 16px;
+            font-weight: 800;
             color: var(--airtime-orange);
-            font-size: 13px;
-            font-weight: 700;
+            margin-bottom: 12px;
             letter-spacing: 0.3px;
             text-transform: uppercase;
-            padding: 14px 24px;
-            border-radius: var(--radius-full);
-            width: 100%;
-            cursor: pointer;
-            transition: all 0.2s ease;
             display: flex;
             align-items: center;
-            justify-content: center;
             gap: 8px;
         }
 
-        .add-card-button:hover {
-            background: var(--airtime-orange-light);
-            border-color: var(--airtime-orange);
+        .callout-text {
+            font-size: 14px;
+            line-height: 1.6;
+            color: var(--text-primary);
+            font-weight: 500;
         }
 
-        /* Tab Navigation */
-        .tabs-container {
-            margin: 24px 0 0;
+        /* Subtle Info Text */
+        .subtle-info {
+            padding: 12px 16px;
+            background: var(--surface);
+            margin: 16px 16px 0;
+            border-radius: var(--radius-md);
+            font-size: 13px;
+            color: var(--text-secondary);
+            text-align: center;
+            line-height: 1.5;
+        }
+
+        /* Category Tabs */
+        .category-tabs-container {
+            margin: 16px 0 0;
             border-bottom: 1px solid var(--border);
             position: sticky;
-            top: 0;
+            top: 72px;
             background: white;
             z-index: 100;
         }
 
-        .tabs {
+        .category-tabs {
             display: flex;
             gap: 8px;
             padding: 0 16px;
@@ -455,13 +342,13 @@
             scrollbar-width: none;
         }
 
-        .tabs::-webkit-scrollbar {
+        .category-tabs::-webkit-scrollbar {
             display: none;
         }
 
-        .tab {
+        .category-tab {
             padding: 12px 16px;
-            font-size: 13px;
+            font-size: 12px;
             font-weight: 700;
             letter-spacing: 0.3px;
             text-transform: uppercase;
@@ -472,18 +359,18 @@
             transition: all 0.2s ease;
         }
 
-        .tab.active {
+        .category-tab.active {
             color: var(--airtime-orange);
             border-bottom-color: var(--airtime-orange);
         }
 
         /* Tab Content */
-        .tab-content {
+        .category-tab-content {
             display: none;
             padding-bottom: 100px;
         }
 
-        .tab-content.active {
+        .category-tab-content.active {
             display: block;
         }
 
@@ -571,6 +458,20 @@
             font-weight: 700;
             padding: 6px 12px;
             border-radius: 20px;
+        }
+
+        .retailer-card .reward-type-badge {
+            position: absolute;
+            bottom: 12px;
+            left: 12px;
+            background: rgba(255, 255, 255, 0.95);
+            color: var(--text-primary);
+            font-size: 9px;
+            font-weight: 700;
+            padding: 4px 8px;
+            border-radius: 12px;
+            text-transform: uppercase;
+            letter-spacing: 0.3px;
         }
 
         .retailer-card .name {
@@ -662,12 +563,11 @@
 
             <!-- Header -->
             <div class="header">
-                <div class="airtime-logo">AIRTIME UP</div>
-                <div style="display: flex; gap: 4px;">
-                    <a href="index.html" style="background: white; color: var(--text-primary); padding: 6px 8px; border-radius: 20px; font-size: 9px; font-weight: 700; text-decoration: none; border: 2px solid var(--border);">P1</a>
-                    <a href="proto-2.html" style="background: var(--airtime-orange); color: white; padding: 6px 8px; border-radius: 20px; font-size: 9px; font-weight: 700; text-decoration: none;">P2</a>
-                    <a href="proto-3.html" style="background: white; color: var(--text-primary); padding: 6px 8px; border-radius: 20px; font-size: 9px; font-weight: 700; text-decoration: none; border: 2px solid var(--border);">P3</a>
-                    <a href="proto-4.html" style="background: white; color: var(--text-primary); padding: 6px 8px; border-radius: 20px; font-size: 9px; font-weight: 700; text-decoration: none; border: 2px solid var(--border);">P4</a>
+                <div style="display: flex; gap: 6px;">
+                    <a href="index.html" style="background: white; color: var(--text-primary); padding: 6px 10px; border-radius: 20px; font-size: 10px; font-weight: 700; text-decoration: none; border: 2px solid var(--border);">P1</a>
+                    <a href="proto-2.html" style="background: white; color: var(--text-primary); padding: 6px 10px; border-radius: 20px; font-size: 10px; font-weight: 700; text-decoration: none; border: 2px solid var(--border);">P2</a>
+                    <a href="proto-3.html" style="background: white; color: var(--text-primary); padding: 6px 10px; border-radius: 20px; font-size: 10px; font-weight: 700; text-decoration: none; border: 2px solid var(--border);">P3</a>
+                    <a href="proto-4.html" style="background: var(--airtime-orange); color: white; padding: 6px 10px; border-radius: 20px; font-size: 10px; font-weight: 700; text-decoration: none;">P4</a>
                 </div>
                 <div class="header-icons">
                     <div class="header-icon">
@@ -726,63 +626,45 @@
                 </div>
             </div>
 
-            <!-- Linked Cards Wallet -->
-            <div class="linked-cards-section">
-                <div class="linked-cards-header">
-                    <div class="linked-cards-title">💳 Linked Cards</div>
-                    <div class="linked-cards-count">2 Cards</div>
-                </div>
-
-                <div class="wallet-container">
-                    <!-- Visa Card -->
-                    <div class="card visa">
-                        <div class="card-status">✓ ACTIVE</div>
-                        <div class="card-header">
-                            <div class="card-chip"></div>
-                            <div class="card-logo">
-                                <div class="visa-logo">VISA</div>
-                            </div>
-                        </div>
-                        <div class="card-number">•••• •••• •••• 4242</div>
-                        <div class="card-footer">
-                            <div class="card-holder">Julian Dunn</div>
-                            <div class="card-expiry">12/26</div>
-                        </div>
+            <!-- Master Tabs -->
+            <div class="master-tabs-container">
+                <div class="master-tabs">
+                    <div class="master-tab active" onclick="switchMasterTab('card-linked')">
+                        💳 Shop by Card
                     </div>
-
-                    <!-- Mastercard -->
-                    <div class="card mastercard">
-                        <div class="card-status">✓ ACTIVE</div>
-                        <div class="card-header">
-                            <div class="card-chip"></div>
-                            <div class="card-logo">
-                                <div class="mastercard-logo">
-                                    <div class="mastercard-circle red"></div>
-                                    <div class="mastercard-circle orange"></div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="card-number">•••• •••• •••• 8888</div>
-                        <div class="card-footer">
-                            <div class="card-holder">Julian Dunn</div>
-                            <div class="card-expiry">09/27</div>
-                        </div>
+                    <div class="master-tab" onclick="switchMasterTab('shop-by-link')">
+                        🔗 Shop by Link
                     </div>
                 </div>
-
-                <button class="add-card-button" onclick="alert('Add new card feature coming soon!')">
-                    <span>➕</span>
-                    <span>Add Another Card</span>
-                </button>
             </div>
 
-            <!-- Tab Navigation -->
-            <div class="tabs-container">
-                <div class="tabs" id="categoryTabs"></div>
+            <!-- Card-Linked Content -->
+            <div id="cardLinkedContent" class="master-tab-content active">
+                <div class="subtle-info">
+                    💳 Seamlessly shop on your linked card to earn at any of these retailers
+                </div>
+                <div class="category-tabs-container">
+                    <div class="category-tabs" id="cardLinkedTabs"></div>
+                </div>
+                <div id="cardLinkedTabContents"></div>
             </div>
 
-            <!-- Tab Content -->
-            <div id="tabContents"></div>
+            <!-- Shop-by-Link Content -->
+            <div id="shopByLinkContent" class="master-tab-content">
+                <div class="educational-callout">
+                    <div class="callout-title">
+                        <span>🔗</span>
+                        <span>Important Reminder</span>
+                    </div>
+                    <div class="callout-text">
+                        Make sure you click the link to earn at all retailers in this section. Rewards are only tracked when you shop through our links!
+                    </div>
+                </div>
+                <div class="category-tabs-container">
+                    <div class="category-tabs" id="shopByLinkTabs"></div>
+                </div>
+                <div id="shopByLinkTabContents"></div>
+            </div>
         </div>
 
         <!-- Bottom Navigation -->
@@ -826,44 +708,80 @@
             'linear-gradient(135deg, #ff6e7f 0%, #bfe9ff 100%)'
         ];
 
-        // Get unique categories
-        const categoriesArray = [...new Set(retailers.map(r => r.category))].sort();
+        // Current state
+        let currentMasterTab = 'card-linked';
+        let currentCategories = { 'card-linked': 'All', 'shop-by-link': 'All' };
 
-        // Add "All" category at the beginning
-        categoriesArray.unshift('All');
+        // Initialize
+        function init() {
+            createTabs('card-linked');
+            createTabs('shop-by-link');
+        }
 
-        // Function to create tabs
-        function createTabs() {
-            const tabsContainer = document.getElementById('categoryTabs');
-            categoriesArray.forEach((category, index) => {
+        // Switch master tabs
+        function switchMasterTab(type) {
+            currentMasterTab = type;
+
+            // Update master tab styling
+            document.querySelectorAll('.master-tab').forEach(tab => {
+                const isCardTab = tab.textContent.includes('Card');
+                const shouldBeActive = (type === 'card-linked' && isCardTab) || (type === 'shop-by-link' && !isCardTab);
+                tab.classList.toggle('active', shouldBeActive);
+            });
+
+            // Update content visibility
+            document.getElementById('cardLinkedContent').classList.toggle('active', type === 'card-linked');
+            document.getElementById('shopByLinkContent').classList.toggle('active', type === 'shop-by-link');
+
+            // Scroll to top
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        // Create tabs for a reward type
+        function createTabs(rewardType) {
+            const filteredRetailers = retailers.filter(r => r.rewardType === rewardType);
+            const categories = [...new Set(filteredRetailers.map(r => r.category))].sort();
+            categories.unshift('All');
+
+            const tabsContainerId = rewardType === 'card-linked' ? 'cardLinkedTabs' : 'shopByLinkTabs';
+            const contentsContainerId = rewardType === 'card-linked' ? 'cardLinkedTabContents' : 'shopByLinkTabContents';
+
+            const tabsContainer = document.getElementById(tabsContainerId);
+            const contentsContainer = document.getElementById(contentsContainerId);
+
+            // Create category tabs
+            categories.forEach((category, index) => {
                 const tab = document.createElement('div');
-                tab.className = `tab ${index === 0 ? 'active' : ''}`;
+                tab.className = `category-tab ${index === 0 ? 'active' : ''}`;
                 tab.textContent = category;
-                tab.onclick = () => switchTab(category);
+                tab.onclick = () => switchCategoryTab(rewardType, category);
                 tabsContainer.appendChild(tab);
+            });
+
+            // Create tab contents
+            categories.forEach(category => {
+                const content = createTabContent(rewardType, category);
+                contentsContainer.appendChild(content);
             });
         }
 
-        // Function to switch tabs
-        function switchTab(category) {
+        // Switch category tabs
+        function switchCategoryTab(rewardType, category) {
+            currentCategories[rewardType] = category;
+
+            const tabsContainerId = rewardType === 'card-linked' ? 'cardLinkedTabs' : 'shopByLinkTabs';
+            const contentsContainerId = rewardType === 'card-linked' ? 'cardLinkedTabContents' : 'shopByLinkTabContents';
+
             // Update tab active state
-            const tabs = document.querySelectorAll('.tab');
+            const tabs = document.getElementById(tabsContainerId).querySelectorAll('.category-tab');
             tabs.forEach(tab => {
-                if (tab.textContent === category) {
-                    tab.classList.add('active');
-                } else {
-                    tab.classList.remove('active');
-                }
+                tab.classList.toggle('active', tab.textContent === category);
             });
 
-            // Update tab content active state
-            const contents = document.querySelectorAll('.tab-content');
+            // Update content active state
+            const contents = document.getElementById(contentsContainerId).querySelectorAll('.category-tab-content');
             contents.forEach(content => {
-                if (content.dataset.category === category) {
-                    content.classList.add('active');
-                } else {
-                    content.classList.remove('active');
-                }
+                content.classList.toggle('active', content.dataset.category === category);
             });
 
             // Scroll to top
@@ -882,11 +800,13 @@
 
         // Function to create retailer card
         function createRetailerCard(retailer, gradientIndex) {
+            const rewardTypeLabel = retailer.rewardType === 'card-linked' ? 'Card-Linked' : 'Click to Earn';
             return `
                 <div class="retailer-card">
                     <div class="image" style="background: ${gradients[gradientIndex % gradients.length]}">
                         <span>${retailer.emoji}</span>
                         <div class="offer-badge">${retailer.offerRate}%</div>
+                        <div class="reward-type-badge">${rewardTypeLabel}</div>
                     </div>
                     <div class="name">${retailer.name}</div>
                     <div class="category">${retailer.category}</div>
@@ -918,14 +838,16 @@
         }
 
         // Function to create tab content
-        function createTabContent(category) {
+        function createTabContent(rewardType, category) {
             const tabContent = document.createElement('div');
-            tabContent.className = `tab-content ${category === 'All' ? 'active' : ''}`;
+            tabContent.className = `category-tab-content ${category === 'All' ? 'active' : ''}`;
             tabContent.dataset.category = category;
 
-            let categoryRetailers = category === 'All'
-                ? retailers
-                : retailers.filter(r => r.category === category);
+            let categoryRetailers = retailers.filter(r => r.rewardType === rewardType);
+
+            if (category !== 'All') {
+                categoryRetailers = categoryRetailers.filter(r => r.category === category);
+            }
 
             if (categoryRetailers.length === 0) {
                 tabContent.innerHTML = `
@@ -994,18 +916,7 @@
             return tabContent;
         }
 
-        // Initialize the page
-        function init() {
-            createTabs();
-
-            const tabContentsContainer = document.getElementById('tabContents');
-            categoriesArray.forEach(category => {
-                const content = createTabContent(category);
-                tabContentsContainer.appendChild(content);
-            });
-        }
-
-        // Run initialization when DOM is ready
+        // Initialize on load
         if (document.readyState === 'loading') {
             document.addEventListener('DOMContentLoaded', init);
         } else {
